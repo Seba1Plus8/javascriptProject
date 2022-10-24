@@ -1,74 +1,99 @@
 let qna =[{
     quantity: 2,
-    question: "2 + 2 = 4?",
-    option1: "true",
-    option2: "false",
-    correctAnswer: "true",
+    question: "Är tummen ett finger?",
+    option1: "Ja",
+    option2: "Nej",
+    correctAnswer: "Ja",
 },{
     quantity: 4,
-    question: "2 + 1 = ?",
-    option1: "1", 
-    option2: "21",
-    option3: "3",
-    option4: "4", 
-    correctAnswer: "3"
-},{
-    quantity: 2,
-    question: "2 + 3 = 5?",
-    option1: "true", 
-    option2: "false",
-    correctAnswer: "true"
+    question: "Flest gjorda mål i Premier League genom tiderna?",
+    option1: "Wayne Rooney", 
+    option2: "Harry Kane",
+    option3: "Alan Shearer",
+    option4: "Sergio Agüero", 
+    correctAnswer: "Alan Shearer"
 },{
     type: "checkbox",
     quantity: 4,
-    question: "vilka är frukter?",
+    question: "Vilken/vilka är frukter?",
     option1: true,
-    opText1: "Banan",
-    option2: true,
-    opText2: "Äpple",
-    option3: false,
-    opText3: "Morot",
+    opText1: "Tomat",
+    option2: false,
+    opText2: "Jordgubbe",
+    option3: true,
+    opText3: "Äpple",
     option4: true,
-    opText4: "Päron",
+    opText4: "Avokado",
     correctAnswer: true
 },{
     quantity: 2,
-    question: "2 + 6 = 8?",
-    option1: "false",
-    option2: "true",
-    correctAnswer: "true"
+    question: "Ingmar Stenmark eller Ingemar Stenmark?",
+    option1: "Ingmar Stenmark", 
+    option2: "Ingemar Stenmark",
+    correctAnswer: "Ingemar Stenmark"
 },{
-    quantity: 2,
-    question: "2 + 5 = 25?",
-    option1: "true",
-    option2: "false",
-    correctAnswer: "false"
+    type: "checkbox",
+    quantity: 4,
+    question: "Vilka/vilken liga har Zlatan inte spelat i?",
+    option1: false,
+    opText1: "Bundesliga",
+    option2: true,
+    opText2: "Serie A",
+    option3: true,
+    opText3: "Superettan",
+    option4: true,
+    opText4: "La liga",
+    correctAnswer: true
 },{
     quantity: 4,
-    question: "2 + 0 = ?",
-    option1: "20", 
-    option2: "2",
-    option3: "0",
-    option4: "22",
-    correctAnswer: "2"
+    question: "Vilket djur dödar flest människor?",
+    option1: "Ormar", 
+    option2: "Myggor",
+    option3: "Flodhästar",
+    option4: "Hundar",
+    correctAnswer: "Myggor"
 },{
-    quantity: 2,
-    question: "2 + 8 = 10?",
-    option1: "true",
-    option2: "false",
-    correctAnswer: "true"
+    type: "checkbox",
+    quantity: 4,
+    question: "Vem/Vilka svenskar har spelat i Manchester United?",
+    option1: true,
+    opText1: "Henrik Larsson",
+    option2: false,
+    opText2: "Fredrik Ljungberg",
+    option3: true,
+    opText3: "Jesper Blomqvist",
+    option4: false,
+    opText4: "Sebastian Larsson",
+    correctAnswer: true
 },{
-    quantity: 2,
-    question: "2 + 9 = 11?",
-    option1: "true", 
-    option2: "false",
-    correctAnswer: "true"
+    quantity: 4,
+    question: "Hur många delstater har USA?",
+    option1: "49", 
+    option2: "51",
+    option3: "52",
+    option4: "50",
+    correctAnswer: "50"
 },{
-    quantity: 2,
-    question: "2 + 10 = 12?",
-    option1: "true", 
-    option2: "false",
-    correctAnswer: "true"
+    type: "checkbox",
+    quantity: 4,
+    question: "Vilka länder är med i Skandinavien",
+    option1: true,
+    opText1: "Norge",
+    option2: true,
+    opText2: "Sverige",
+    option3: false,
+    opText3: "Finland",
+    option4: true,
+    opText4: "Danmark",
+    correctAnswer: true
+},{
+    quantity: 4,
+    question: "Hur många går det i denna kurs?",
+    option1: "39", 
+    option2: "40",
+    option3: "38",
+    option4: "41",
+    correctAnswer: "39"
 }];
 
 let currentQuestion = 0;
@@ -76,7 +101,7 @@ let score = 0;
 let questions = 1;
 let correctAnswer = qna[0].correctAnswer;
 let highscore = qna.length;
-  
+let respond = [];
 
 const answers = document.querySelector("#answers").children;
 const nextButton = document.getElementById("next");
@@ -94,9 +119,6 @@ let optionB = document.querySelector("#answer1").value = qna[0].option2;
 let optionC = document.querySelector("#answer2").value = qna[0].option3;
 let optionD = document.querySelector("#answer3").value = qna[0].option4;
 let progress = document.querySelector("#progress").innerText = `Fråga ${questions} av ${qna.length}`;
-
-//divboxes.toString().includes('2')
-console.log(label);
 
 let nextQuestion = () => {
     currentQuestion++
@@ -141,23 +163,25 @@ let nextQuestion = () => {
                 divbox[i].append(label);          
             };  
             
-            document.querySelector("#para0").innerText = "Äpple";
-            document.querySelector("#para1").innerText = "Päron";
-            document.querySelector("#para2").innerText = "Morot";
-            document.querySelector("#para3").innerText = "Banan";
+            document.querySelector("#para0").innerText = qna[currentQuestion].opText1;
+            document.querySelector("#para1").innerText = qna[currentQuestion].opText2;
+            document.querySelector("#para2").innerText = qna[currentQuestion].opText3;
+            document.querySelector("#para3").innerText = qna[currentQuestion].opText4;
 
             footer.append(checkAnswer);
 
             const getCheckedAnswer = () => {
                 checkAnswer.style.display = "none";
                 nextButton.style.display = "block";
+                let checkedScore = 0
                 answer.forEach(element => {
                     if (!element.checked && element.value === "true") {
                         element.parentElement.style.border = "5px solid #00B435";
                         console.log("hej")
                     } 
                     else if (element.checked && element.value === "true") {
-                        score++
+                        checkedScore++
+
                         element.parentElement.style.border = "5px solid #00B435";
                         element.parentElement.style.backgroundColor = "#33DE66";
                         element.parentElement.style.color = "#196B31";
@@ -166,12 +190,16 @@ let nextQuestion = () => {
                         element.parentElement.style.backgroundColor = "#F24129";
                         element.parentElement.style.color = "#690215";
                     }
-                    console.log(score)
+                   
+                    respond = respond.concat(userChoices)
+                    console.log(checkedScore)
                     answer.forEach(btn => {
-                        btn.disabled = true;
-                        
+                        btn.disabled = true;             
                     });
-
+                    if (checkedScore === 3) {
+                        score++
+                        console.log(respond);
+                    }
                 });
             }
             checkAnswer.addEventListener('click', getCheckedAnswer);
@@ -194,9 +222,10 @@ let nextQuestion = () => {
                 document.querySelector("#box3").style.display = null;
                 document.querySelector("#box4").style.display = null;
             } else {
-                question = document.querySelector("h2").innerText = "Slut på frågor!";
+                question = document.querySelector("h2").innerText = "Resultat";
                 document.querySelector("#next").disabled = true;
-                
+                document.querySelector("#answers").remove();
+
                 progress = document.querySelector("#progress").innerText = `Du fick ${score} rätt av ${qna.length} möjliga`;
                 
                 getScore();
@@ -223,7 +252,7 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
         if (modes.ariaPressed === "true") {
             btn.style.color = "#E6DBBA";
             btn.style.backgroundColor = "#0A223D";
-            btn.style.border = "#E6DBBA solid 2px";             
+            btn.style.border = "#E6DBBA solid 1px";             
         } else {
                 btn.style.color = null;
                 btn.style.backgroundColor = null;
@@ -233,7 +262,7 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
         };   
     };
     answer[0].addEventListener('click', () => {
-        if (document.querySelector("#answer0").checked === true) {
+        if (document.querySelector("#answer0").checked && answer[0] === "checkbox") {
             console.log("first if")
         }
          else if (document.querySelector("#answer0").value === correctAnswer) {
@@ -259,7 +288,7 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
             }
         });
         answer[1].addEventListener('click', () => {
-            if (document.querySelector("#answer1").checked === true) {
+            if (document.querySelector("#answer1").checked && answer[1] === "checkbox") {
                 console.log("first if")
             }
             else if (document.querySelector("#answer1").value === correctAnswer) {
@@ -285,7 +314,7 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
             }
         });
         answer[2].addEventListener('click', () => {
-            if (document.querySelector("#answer2").checked === true) {
+            if (document.querySelector("#answer2").checked && answer[2] === "checkbox") {
                 console.log("first if")
             }
             else if (document.querySelector("#answer2").value === correctAnswer) {
@@ -311,7 +340,7 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
         }
     });
     answer[3].addEventListener('click', () => {
-        if (document.querySelector("#answer3").checked === true) {
+        if (document.querySelector("#answer3").checked && answer[3] === "checkbox") {
             console.log("first if")
         }
         else if (document.querySelector("#answer3").value === correctAnswer) {
@@ -347,19 +376,34 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
             document.querySelector("#container").style.borderRadius = "20px";
         }
         
-        document.querySelector("#answer0").style.display = "none";
-        document.querySelector("#answer1").style.display = "none";
-        document.querySelector("#answer2").style.display = "none";
-        document.querySelector("#answer3").style.display = "none";
-        document.getElementById("next").style.display = "none";
-        
         if(score > highscore * 0.75) {
+            let procentText = document.createElement("h1");
+            let procent = score / highscore * 100;
+            procentText.innerText = `${procent}%`
+            document.querySelector("#question").append(procentText);
+            procentText.style.padding = "0px"
+            procentText.style.color = "#00B435"
+
             document.querySelector("#result").innerText = "MYCKET VÄL GODKÄNT";
             document.querySelector("#result").style.color = "#00B435";
         } else if (score > highscore * 0.5) {
+            let procentText = document.createElement("h1");
+            let procent = score / highscore * 100;
+            procentText.innerText = `${procent}%`
+            document.querySelector("#question").append(procentText);
+            procentText.style.padding = "0px"
+            procentText.style.color = "#FF8D0D"
+
             document.querySelector("#result").innerText = "GODKÄNT";
             document.querySelector("#result").style.color = "#FF8D0D";
         } else {
+            let procentText = document.createElement("h1");
+            let procent = score / highscore * 100;
+            procentText.innerText = `${procent}%`
+            document.querySelector("#question").append(procentText);
+            procentText.style.padding = "0px"
+            procentText.style.color = "#BD0114"
+
             document.querySelector("#result").innerText = "UNDERKÄNT";
             document.querySelector("#result").style.color = "#BD0114";
         }
@@ -372,7 +416,7 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
            for (let btn of answers) {
                 btn.style.color = "#E6DBBA";
                 btn.style.backgroundColor = "#0A223D";
-                btn.style.border = "#E6DBBA solid 2px";
+                //btn.style.border = "#E6DBBA solid 1px";
             };    
             document.querySelector("body").style.backgroundColor = "#00011F";
             document.querySelector("body").style.color = "#E6DBBA";  
