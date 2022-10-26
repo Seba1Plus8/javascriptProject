@@ -124,9 +124,9 @@ let nextQuestion = () => {
     currentQuestion++
     questions++ 
 
+//Om det finns label tag så ska det döljas
     if (document.querySelector(".remove")) {
         for (let index = 0; index < divbox.length; index++) {
-            console.log(answers[index])
             document.querySelector(".remove").remove()
             answers[index].style.border = null;
             answers[index].style.backgroundColor = null;
@@ -134,7 +134,7 @@ let nextQuestion = () => {
         }
         
     };
-    
+    // Om det är checkbox fråga
     if(currentQuestion < qna.length && qna[currentQuestion].quantity === 4 && qna[currentQuestion].type === "checkbox") { 
         nextButton.style.display = "none";
         document.querySelector("#box3").style.display = "block";
@@ -162,7 +162,7 @@ let nextQuestion = () => {
                 label.setAttribute("for", `answer${i}`)
                 divbox[i].append(label);          
             };  
-            
+            //svaren för checkbox svar
             document.querySelector("#para0").innerText = qna[currentQuestion].opText1;
             document.querySelector("#para1").innerText = qna[currentQuestion].opText2;
             document.querySelector("#para2").innerText = qna[currentQuestion].opText3;
@@ -177,7 +177,6 @@ let nextQuestion = () => {
                 answer.forEach(element => {
                     if (!element.checked && element.value === "true") {
                         element.parentElement.style.border = "5px solid #00B435";
-                        console.log("hej")
                     } 
                     else if (element.checked && element.value === "true") {
                         checkedScore++
@@ -185,25 +184,25 @@ let nextQuestion = () => {
                         element.parentElement.style.border = "5px solid #00B435";
                         element.parentElement.style.backgroundColor = "#33DE66";
                         element.parentElement.style.color = "#196B31";
-                    } else {
+                    } else if (!element.checked && element.value === "false"){
+                        element.parentElement.style.border = "5px solid #BD0215";
+                    }
+                    else {
                         element.parentElement.style.border = "5px solid #BD0215";
                         element.parentElement.style.backgroundColor = "#F24129";
                         element.parentElement.style.color = "#690215";
                     }
-                   
-                    respond = respond.concat(userChoices)
-                    console.log(checkedScore)
+
                     answer.forEach(btn => {
                         btn.disabled = true;             
                     });
                     if (checkedScore === 3) {
                         score++
-                        console.log(respond);
                     }
                 });
             }
             checkAnswer.addEventListener('click', getCheckedAnswer);
-
+//Om det är 4 svarsalternativ
             } else if(currentQuestion < qna.length && qna[currentQuestion].quantity === 4) { 
                 for (let i = 0; i < divbox.length; i++) {
                     answer[i].type = "button";
@@ -213,6 +212,7 @@ let nextQuestion = () => {
                 console.log(correctAnswer)
                 document.querySelector("#box3").style.display = "block";
                 document.querySelector("#box4").style.display = "block";
+                //True o false fråga
             } else if(currentQuestion < qna.length ){
                 for (let i = 0; i < divbox.length; i++) {
                     answer[i].type = "button";
@@ -222,6 +222,7 @@ let nextQuestion = () => {
                 document.querySelector("#box3").style.display = null;
                 document.querySelector("#box4").style.display = null;
             } else {
+                //när frågor är slut
                 question = document.querySelector("h2").innerText = "Resultat";
                 document.querySelector("#next").disabled = true;
                 document.querySelector("#answers").remove();
@@ -232,7 +233,7 @@ let nextQuestion = () => {
             };
 correctAnswer = qna[currentQuestion].correctAnswer;
         
-
+//frågorna och svaren skrivs
 question = document.querySelector("h2").innerText = qna[currentQuestion].question;
 
 optionA = document.querySelector("#answer0").value = qna[currentQuestion].option1;
@@ -240,9 +241,9 @@ optionB = document.querySelector("#answer1").value = qna[currentQuestion].option
 optionC = document.querySelector("#answer2").value = qna[currentQuestion].option3;
 optionD = document.querySelector("#answer3").value = qna[currentQuestion].option4;
 
+progress = document.querySelector("#progress").innerText = `Fråga ${questions} av ${qna.length}`;
     
-    progress = document.querySelector("#progress").innerText = `Fråga ${questions} av ${qna.length}`;
-    
+//lägger/ta bort till correct class på varje rätt fråga så att jag kan visa svaren direkt efter att man har valt.
     for (let btn of answer) {
         btn.classList.remove("correct"); 
         btn.disabled = false
@@ -251,19 +252,18 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
         };
         if (modes.ariaPressed === "true") {
             btn.style.color = "#E6DBBA";
-            btn.style.backgroundColor = "#0A223D";
-            btn.style.border = "#E6DBBA solid 1px";             
+            btn.style.backgroundColor = "#000017";
+            btn.style.border = "#1C00AF solid 1px";             
         } else {
                 btn.style.color = null;
                 btn.style.backgroundColor = null;
                 btn.style.border = null;             
-
             }
         };   
     };
+    //Vad som ska hända efter knappval
     answer[0].addEventListener('click', () => {
         if (document.querySelector("#answer0").checked && answer[0] === "checkbox") {
-            console.log("first if")
         }
          else if (document.querySelector("#answer0").value === correctAnswer) {
             score++
@@ -271,7 +271,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
                 answer[0].style.backgroundColor = "#33DE66";
                 answer[0].style.color = "#196B31";
                 
-                console.log("optionA");
                 answer.forEach(btn => {
                     btn.disabled = true;
                 });
@@ -280,7 +279,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
                 answer[0].style.backgroundColor = "#F24129";
                 answer[0].style.color = "#690215";
                 document.querySelector(".correct").style.border = "5px solid #00B435";
-                console.log("wrong");
                 
                 answer.forEach(btn => {
                     btn.disabled = true;
@@ -289,7 +287,7 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
         });
         answer[1].addEventListener('click', () => {
             if (document.querySelector("#answer1").checked && answer[1] === "checkbox") {
-                console.log("first if")
+
             }
             else if (document.querySelector("#answer1").value === correctAnswer) {
                 score++
@@ -297,7 +295,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
                 answer[1].style.backgroundColor = "#33DE66";
                 answer[1].style.color = "#196B31";
                 
-                console.log("optionA");
                 answer.forEach(btn => {
                     btn.disabled = true;
                 });
@@ -306,7 +303,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
                 answer[1].style.backgroundColor = "#F24129";
                 answer[1].style.color = "#690215";
                 document.querySelector(".correct").style.border = "5px solid #00B435";
-                console.log("wrong");
                 
                 answer.forEach(btn => {
                     btn.disabled = true;
@@ -315,7 +311,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
         });
         answer[2].addEventListener('click', () => {
             if (document.querySelector("#answer2").checked && answer[2] === "checkbox") {
-                console.log("first if")
             }
             else if (document.querySelector("#answer2").value === correctAnswer) {
                 score++
@@ -323,7 +318,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
                 answer[2].style.backgroundColor = "#33DE66";
                 answer[2].style.color = "#196B31";
                 
-                console.log("optionA");
                 answer.forEach(btn => {
                     btn.disabled = true;
                 });
@@ -332,7 +326,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
             answer[2].style.backgroundColor = "#F24129";
             answer[2].style.color = "#690215";
             document.querySelector(".correct").style.border = "5px solid #00B435";
-            console.log("wrong");
             
             answer.forEach(btn => {
                 btn.disabled = true;
@@ -341,7 +334,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
     });
     answer[3].addEventListener('click', () => {
         if (document.querySelector("#answer3").checked && answer[3] === "checkbox") {
-            console.log("first if")
         }
         else if (document.querySelector("#answer3").value === correctAnswer) {
             score++
@@ -349,7 +341,6 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
             answer[3].style.backgroundColor = "#33DE66";
             answer[3].style.color = "#196B31";
             
-            console.log("optionD");
             answer.forEach(btn => {
                 btn.disabled = true;
             });
@@ -358,15 +349,13 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
             answer[3].style.backgroundColor = "#F24129";
             answer[3].style.color = "#690215";
             document.querySelector(".correct").style.border = "5px solid #00B435";
-            console.log("wrong");
             
             answer.forEach(btn => {
                 btn.disabled = true;
             });
         }
     });
-  
-    
+  //hämtar svar och skriver ut det
     let getScore = () => {
         if (modes.ariaPressed === "false") {
             document.querySelector("#container").style.border = "2px solid black";
@@ -409,16 +398,17 @@ optionD = document.querySelector("#answer3").value = qna[currentQuestion].option
         }
         
     };
+    //byte mellan lightMode och DarkMode
     let switchModes = () => {
         if (modes.ariaPressed === "false") {
             modes.ariaPressed = "true";
             modes.innerText = "Light mode"
-           for (let btn of answers) {
+           for (let btn of answer) {
                 btn.style.color = "#E6DBBA";
-                btn.style.backgroundColor = "#0A223D";
-                //btn.style.border = "#E6DBBA solid 1px";
+                btn.style.backgroundColor = "#000017";
+                btn.style.border = "#1C00AF solid 1px";
             };    
-            document.querySelector("body").style.backgroundColor = "#00011F";
+            document.querySelector("body").style.backgroundColor = "#000017";
             document.querySelector("body").style.color = "#E6DBBA";  
         } else if (modes.ariaPressed === "true"){
             modes.ariaPressed = "false";
