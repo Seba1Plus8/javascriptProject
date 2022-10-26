@@ -139,6 +139,11 @@ let nextQuestion = () => {
         nextButton.style.display = "none";
         document.querySelector("#box3").style.display = "block";
         document.querySelector("#box4").style.display = "block";
+        answer.forEach((i) => {
+            if(i.checked) {
+                i.checked = false
+            }
+        })
         
         let checkAnswer = document.createElement("button");
         checkAnswer.innerText = "Check answer";
@@ -202,7 +207,7 @@ let nextQuestion = () => {
                 });
             }
             checkAnswer.addEventListener('click', getCheckedAnswer);
-//Om det är 4 svarsalternativ
+            //Om det är 4 svarsalternativ
             } else if(currentQuestion < qna.length && qna[currentQuestion].quantity === 4) { 
                 for (let i = 0; i < divbox.length; i++) {
                     answer[i].type = "button";
@@ -212,7 +217,7 @@ let nextQuestion = () => {
                 console.log(correctAnswer)
                 document.querySelector("#box3").style.display = "block";
                 document.querySelector("#box4").style.display = "block";
-                //True o false fråga
+            //True o false fråga
             } else if(currentQuestion < qna.length ){
                 for (let i = 0; i < divbox.length; i++) {
                     answer[i].type = "button";
